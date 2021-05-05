@@ -20,8 +20,6 @@ services:
       - ZOOKEEPER_SERVERS=zookeeper:2888:3888
   kafka1:
     image: confluentinc/cp-kafka:${CONFLUENT_PLATFORM_VERSION:-6.1.1}
-    healthcheck:
-      test: ps augwwx | egrep [S]upportedKafka
     depends_on:
       - zookeeper
     ports:
@@ -35,8 +33,6 @@ services:
       - ZOOKEEPER=zookeeper:2181
   kafka2:
     image: confluentinc/cp-kafka:${CONFLUENT_PLATFORM_VERSION:-6.1.1}
-    healthcheck:
-      test: ps augwwx | egrep [S]upportedKafka
     depends_on:
       - zookeeper
     ports:
@@ -50,8 +46,6 @@ services:
       - ZOOKEEPER=zookeeper:2181
   kafka3:
     image: confluentinc/cp-kafka:${CONFLUENT_PLATFORM_VERSION:-6.1.1}
-    healthcheck:
-      test: ps augwwx | egrep [S]upportedKafka
     depends_on:
       - zookeeper
     ports:
@@ -65,8 +59,6 @@ services:
       - ZOOKEEPER=zookeeper:2181
   kafka4:
     image: confluentinc/cp-kafka:${CONFLUENT_PLATFORM_VERSION:-6.1.1}
-    healthcheck:
-      test: ps augwwx | egrep [S]upportedKafka
     depends_on:
       - zookeeper
     ports:
@@ -80,8 +72,6 @@ services:
       - ZOOKEEPER=zookeeper:2181
   kafka5:
     image: confluentinc/cp-kafka:${CONFLUENT_PLATFORM_VERSION:-6.1.1}
-    healthcheck:
-      test: ps augwwx | egrep [S]upportedKafka
     depends_on:
       - zookeeper
     ports:

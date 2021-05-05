@@ -1,6 +1,8 @@
+service.number-of-tenants: 100
+
 example:
   kafka:
-    consumer-enabled: ${consumer-enabled:true}
+    consumer-enabled: ${consumer_enabled:true}
 spring:
   kafka:
     bootstrap-servers: ${kafka_bootstrap_servers:localhost:9091}
@@ -22,3 +24,7 @@ spring:
       poll-timeout: 1800000
       concurrency: 1
       ack-mode: manual_immediate
+logging:
+  level:
+    ROOT: WARN
+    com.example.springkafka: INFO

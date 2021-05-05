@@ -1,5 +1,8 @@
 package com.example.springkafka.consumer;
 
+import com.example.springkafka.configuration.TopicNamesProvider;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,13 +13,15 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
+@RequiredArgsConstructor
 @ConditionalOnProperty(value = "example.kafka.consumer-enabled", havingValue = "true")
 public class Consumer {
 
-    private final Logger logger = LoggerFactory.getLogger(Consumer.class);
+    private final TopicNamesProvider topicNamesProvider;
 
-    @KafkaListener(topics = {"tenant1_messages", "tenant2_messages"})
+    @KafkaListener(topics = "#{topicNamesProvider.getTopicNames()}")
     public void consume(final @Payload String message,
                         final @Header(KafkaHeaders.OFFSET) Integer offset,
                         final @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
@@ -25,8 +30,7 @@ public class Consumer {
                         final @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long ts,
                         final Acknowledgment acknowledgment
     ) {
-        logger.info("Consumed message -> timestamp: {}, message: {}, offset: {}, key: {}, partition: {}, topic: {}",
-                ts, message, offset, key, partition, topic);
+        log.info("A message was consumed. topic: {}, key: {}, partition: {}, offset: {}, received timestamp: {}, message: {}", topic, key, partition, offset, ts, message);
         acknowledgment.acknowledge();
     }
 }
